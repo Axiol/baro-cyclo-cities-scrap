@@ -9,7 +9,7 @@ async function parse(cities) {
   let citiesGeo = [];
   let citiesGeoErr = 0;
 
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 10; i++) {
     const el = cities[i];
 
     try {
@@ -57,11 +57,14 @@ async function save(cities) {
   let citiesIdErr = 0;
   for (let i = 0; i < cities.length; i++) {
     const el = cities[i];
+    const borders = el.borders.map((item) => {
+      return [item[1], item[0]];
+    });
     try {
       const response = await axios.post(`${process.env.BACKEND_URL}/places`, {
         name: el.name,
         center: el.center,
-        borders: el.borders
+        borders
       });
     } catch(err) {
       citiesIdErr++;
